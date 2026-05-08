@@ -1,0 +1,5 @@
+Proyecto Final POO
+Sistema Biblioteca Java Swing
+
+Estructura inicial creada.
+Conexion GitHub funcionando.
