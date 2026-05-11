@@ -80,6 +80,8 @@ public class VentanaMenu extends JFrame
 
         add(btnMateriales);
 
+        btnMateriales.addActionListener(this);
+
         btnPrestamos =
                 new JButton("Prestamos");
 
@@ -111,6 +113,11 @@ public class VentanaMenu extends JFrame
         if (e.getSource() == btnUsuarios) {
 
             new VentanaUsuarios();
+        }
+
+        if (e.getSource() == btnMateriales) {
+
+            new VentanaMateriales();
         }
     }
 }
