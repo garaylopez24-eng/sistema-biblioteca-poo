@@ -4,8 +4,10 @@ import dao.UsuarioDAO;
 import modelos.Usuario;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class VentanaUsuarios extends JFrame
         implements ActionListener {
@@ -22,12 +24,19 @@ public class VentanaUsuarios extends JFrame
     JTextField txtRol;
 
     JButton btnGuardar;
+    JButton btnListar;
+
+    JTable tablaUsuarios;
+
+    JScrollPane scrollTabla;
+
+    DefaultTableModel modeloTabla;
 
     public VentanaUsuarios() {
 
         setTitle("Modulo Usuarios");
 
-        setSize(500, 400);
+        setSize(800, 500);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -46,7 +55,7 @@ public class VentanaUsuarios extends JFrame
                 new JLabel("REGISTRO USUARIOS");
 
         lblTitulo.setBounds(
-                130,
+                280,
                 20,
                 250,
                 30
@@ -58,7 +67,7 @@ public class VentanaUsuarios extends JFrame
                 new JLabel("Nombre:");
 
         lblNombre.setBounds(
-                50,
+                30,
                 80,
                 100,
                 30
@@ -70,9 +79,9 @@ public class VentanaUsuarios extends JFrame
                 new JTextField();
 
         txtNombre.setBounds(
-                180,
+                120,
                 80,
-                200,
+                180,
                 30
         );
 
@@ -82,7 +91,7 @@ public class VentanaUsuarios extends JFrame
                 new JLabel("Correo:");
 
         lblCorreo.setBounds(
-                50,
+                30,
                 130,
                 100,
                 30
@@ -94,9 +103,9 @@ public class VentanaUsuarios extends JFrame
                 new JTextField();
 
         txtCorreo.setBounds(
-                180,
+                120,
                 130,
-                200,
+                180,
                 30
         );
 
@@ -106,7 +115,7 @@ public class VentanaUsuarios extends JFrame
                 new JLabel("Password:");
 
         lblPassword.setBounds(
-                50,
+                30,
                 180,
                 100,
                 30
@@ -118,9 +127,9 @@ public class VentanaUsuarios extends JFrame
                 new JTextField();
 
         txtPassword.setBounds(
+                120,
                 180,
                 180,
-                200,
                 30
         );
 
@@ -130,7 +139,7 @@ public class VentanaUsuarios extends JFrame
                 new JLabel("Rol:");
 
         lblRol.setBounds(
-                50,
+                30,
                 230,
                 100,
                 30
@@ -142,27 +151,69 @@ public class VentanaUsuarios extends JFrame
                 new JTextField();
 
         txtRol.setBounds(
-                180,
+                120,
                 230,
-                200,
+                180,
                 30
         );
 
         add(txtRol);
 
         btnGuardar =
-                new JButton("Guardar Usuario");
+                new JButton("Guardar");
 
         btnGuardar.setBounds(
-                150,
+                50,
                 300,
-                180,
+                120,
                 40
         );
 
         add(btnGuardar);
 
         btnGuardar.addActionListener(this);
+
+        btnListar =
+                new JButton("Listar");
+
+        btnListar.setBounds(
+                190,
+                300,
+                120,
+                40
+        );
+
+        add(btnListar);
+
+        btnListar.addActionListener(this);
+
+        modeloTabla =
+                new DefaultTableModel();
+
+        modeloTabla.addColumn("ID");
+
+        modeloTabla.addColumn("Nombre");
+
+        modeloTabla.addColumn("Correo");
+
+        modeloTabla.addColumn("Rol");
+
+        modeloTabla.addColumn("Mora");
+
+        tablaUsuarios =
+                new JTable(modeloTabla);
+
+        scrollTabla =
+                new JScrollPane(tablaUsuarios);
+
+        scrollTabla.setBounds(
+                350,
+                80,
+                400,
+                300
+        );
+
+        add(scrollTabla);
     }
 
     @Override
@@ -200,6 +251,35 @@ public class VentanaUsuarios extends JFrame
                     null,
                     "Usuario guardado"
             );
+        }
+
+        if (e.getSource() == btnListar) {
+
+            modeloTabla.setRowCount(0);
+
+            UsuarioDAO dao =
+                    new UsuarioDAO();
+
+            ArrayList<Usuario> listaUsuarios =
+                    dao.listarUsuarios();
+
+            for (Usuario usuario : listaUsuarios) {
+
+                Object[] fila = {
+
+                        usuario.getIdUsuario(),
+
+                        usuario.getNombre(),
+
+                        usuario.getCorreo(),
+
+                        usuario.getRol(),
+
+                        usuario.getMora()
+                };
+
+                modeloTabla.addRow(fila);
+            }
         }
     }
 }
