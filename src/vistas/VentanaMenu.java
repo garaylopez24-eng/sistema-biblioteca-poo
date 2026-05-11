@@ -94,6 +94,8 @@ public class VentanaMenu extends JFrame
 
         add(btnPrestamos);
 
+        btnPrestamos.addActionListener(this);
+
         btnSalir =
                 new JButton("Salir");
 
@@ -105,6 +107,8 @@ public class VentanaMenu extends JFrame
         );
 
         add(btnSalir);
+
+        btnSalir.addActionListener(this);
     }
 
     @Override
@@ -118,6 +122,16 @@ public class VentanaMenu extends JFrame
         if (e.getSource() == btnMateriales) {
 
             new VentanaMateriales();
+        }
+
+        if (e.getSource() == btnPrestamos) {
+
+            new VentanaPrestamos();
+        }
+
+        if (e.getSource() == btnSalir) {
+
+            System.exit(0);
         }
     }
 }
