@@ -1,9 +1,14 @@
 package vistas;
 
+import dao.UsuarioDAO;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class VentanaLogin extends JFrame {
+public class VentanaLogin extends JFrame
+        implements ActionListener {
 
     JLabel lblTitulo;
     JLabel lblUsuario;
@@ -43,7 +48,7 @@ public class VentanaLogin extends JFrame {
 
         add(lblTitulo);
 
-        lblUsuario = new JLabel("Usuario:");
+        lblUsuario = new JLabel("Correo:");
 
         lblUsuario.setBounds(50, 80, 100, 30);
 
@@ -72,5 +77,43 @@ public class VentanaLogin extends JFrame {
         btnLogin.setBounds(120, 200, 150, 40);
 
         add(btnLogin);
+
+        btnLogin.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == btnLogin) {
+
+            String correo =
+                    txtUsuario.getText();
+
+            String password =
+                    txtPassword.getText();
+
+            UsuarioDAO dao = new UsuarioDAO();
+
+            boolean loginCorrecto =
+                    dao.validarLogin(
+                            correo,
+                            password
+                    );
+
+            if (loginCorrecto) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Bienvenido al sistema"
+                );
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Credenciales incorrectas"
+                );
+            }
+        }
     }
 }

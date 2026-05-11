@@ -100,4 +100,40 @@ public class UsuarioDAO {
 
         return listaUsuarios;
     }
+
+    public boolean validarLogin(
+            String correo,
+            String password
+    ) {
+
+        String sql =
+                "SELECT * FROM usuarios " +
+                        "WHERE correo = ? AND password = ?";
+
+        Connection conexion = null;
+
+        try {
+
+            conexion = ConexionBD.conectar();
+
+            PreparedStatement ps =
+                    conexion.prepareStatement(sql);
+
+            ps.setString(1, correo);
+
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+
+            return rs.next();
+
+        } catch (SQLException e) {
+
+            System.out.println("Error en login");
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
