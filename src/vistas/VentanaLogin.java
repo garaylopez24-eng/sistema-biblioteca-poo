@@ -107,6 +107,10 @@ public class VentanaLogin extends JFrame
                         "Bienvenido al sistema"
                 );
 
+                new VentanaMenu();
+
+                dispose();
+
             } else {
 
                 JOptionPane.showMessageDialog(
