@@ -2,8 +2,11 @@ package vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class VentanaMenu extends JFrame {
+public class VentanaMenu extends JFrame
+        implements ActionListener {
 
     JLabel lblTitulo;
 
@@ -63,6 +66,8 @@ public class VentanaMenu extends JFrame {
 
         add(btnUsuarios);
 
+        btnUsuarios.addActionListener(this);
+
         btnMateriales =
                 new JButton("Materiales");
 
@@ -98,5 +103,14 @@ public class VentanaMenu extends JFrame {
         );
 
         add(btnSalir);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == btnUsuarios) {
+
+            new VentanaUsuarios();
+        }
     }
 }
